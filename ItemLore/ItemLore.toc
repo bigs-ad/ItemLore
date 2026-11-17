@@ -1,0 +1,16 @@
+## Interface: 16001
+## Title: 物品秘笺 (ItemLore)
+## Notes: Item purposes, hidden clues and safe cleanup suggestions.
+## Notes-zhCN: 物品秘笺
+## Version: 0.6.13-beta
+## IconTexture: Interface\AddOns\ItemLore\Media\Logo-eye.tga
+## OptionalDeps: Questie, QuestieDB
+## SavedVariablesPerCharacter: ItemLoreDB
+Core.lua
+UsageData.lua
+SpecialItems.lua
+View.lua
+Main.lua
+EntryPoints.lua
+Tooltip.lua
+Settings.lua

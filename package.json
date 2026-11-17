@@ -1,0 +1,10 @@
+{
+  "name": "itemlore-tests",
+  "version": "0.6.13-beta",
+  "private": true,
+  "scripts": { "test": "node tools/test.cjs" },
+  "devDependencies": {
+    "fengari-node-cli": "0.1.0",
+    "luaparse": "0.3.1"
+  }
+}

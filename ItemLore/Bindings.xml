@@ -1,0 +1,5 @@
+<Bindings>
+    <Binding name="ITEMLORE_TOGGLE" header="ITEMLORE">
+        if ItemLoreUI then ItemLoreUI.Toggle() end
+    </Binding>
+</Bindings>
