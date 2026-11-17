@@ -1,3 +1,4 @@
+local L=ItemLoreLocale
 ItemLoreCore = {}
 local C = ItemLoreCore
 function C.BuildIndex(db)
@@ -22,9 +23,9 @@ function C.BuildIndex(db)
     return index
 end
 function C.Classify(item, quests, protected)
-    if protected then return 'protected', '已加入保护名单' end
-    if item.classID ~= 12 then return 'keep', '非专用任务物品，不建议清理' end
-    if not item.questIDs or #item.questIDs == 0 then return 'unknown', '数据库没有任务关联' end
+    if protected then return 'protected', L['已加入保护名单'] end
+    if item.classID ~= 12 then return 'keep', L['非专用任务物品，不建议清理'] end
+    if not item.questIDs or #item.questIDs == 0 then return 'unknown', L['数据库没有任务关联'] end
     local unknown, keep
     for _, id in ipairs(item.questIDs) do
         local q = quests[id]
@@ -34,9 +35,9 @@ function C.Classify(item, quests, protected)
             keep = true
         end
     end
-    if keep then return 'keep', '关联任务仍在进行、尚未交付或可重复' end
-    if unknown then return 'unknown', '任务状态或重复属性无法确认' end
-    return 'candidate', '数据库已知关联任务均已完成，且非重复任务；可能存在未收录用途'
+    if keep then return 'keep', L['关联任务仍在进行、尚未交付或可重复'] end
+    if unknown then return 'unknown', L['任务状态或重复属性无法确认'] end
+    return 'candidate', L['数据库已知关联任务均已完成，且非重复任务；可能存在未收录用途']
 end
 function C.SameStack(a, b)
     return a and b and a.id == b.id and a.count == b.count and a.link == b.link and not b.locked

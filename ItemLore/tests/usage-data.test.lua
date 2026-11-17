@@ -1,3 +1,5 @@
+GetLocale=GetLocale or function() return 'zhCN' end
+dofile('ItemLore/Locale.lua')
 dofile('ItemLore/UsageData.lua')
 dofile('ItemLore/SpecialItems.lua')
 local count=0

@@ -1,6 +1,7 @@
 # 用途资料维护
 
-唯一数据源是 `UsageData.lua`，以数值物品 ID 为键，不按名字匹配。
+用途条目定义在 `UsageData.lua`，以数值物品 ID 为键，不按名字匹配。
+显示文字通过 `Locale.lua` 翻译；新增或修改文案时必须同时更新英文，不能只修改中文键。
 
 每条包含 name（展示名称）、summary（简短提示）、usage（详细用途）、
 version（证据适用版本）、tested（是否完整实测用途）、verification（具体核实范围）、

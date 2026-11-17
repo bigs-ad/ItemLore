@@ -1,3 +1,5 @@
+GetLocale=GetLocale or function() return 'zhCN' end
+dofile('ItemLore/Locale.lua')
 local objects={}
 local function object()
  local o={scripts={},shown=true}

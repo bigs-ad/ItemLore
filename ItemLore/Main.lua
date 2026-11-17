@@ -1,8 +1,9 @@
+local L=ItemLoreLocale
 local C = ItemLoreCore
 local rows, page, frame, statusText = {}, 1
 local reverseIndex, indexWorker, indexError, indexProgress
-local labels = {candidate='疑似残留',keep='保留',unknown='无法确定',protected='已保护'}
-local function say(s) DEFAULT_CHAT_FRAME:AddMessage('|cff80d8b0物品秘笺：|r' .. s) end
+local labels = {candidate=L['疑似残留'],keep=L['保留'],unknown=L['无法确定'],protected=L['已保护']}
+local function say(s) DEFAULT_CHAT_FRAME:AddMessage(L['|cff80d8b0物品秘笺：|r'] .. s) end
 local function call(fn, ...)
     if type(fn) ~= 'function' then return nil end
     local ok, value = pcall(fn, ...)
@@ -64,14 +65,14 @@ local function examine(row)
         end
         if q.done==true then row.completedQuests[#row.completedQuests+1]='[' .. id .. '] ' .. (name or '?') end
         details[#details+1]='[' .. id .. '] ' .. (name or '?') .. ' (' ..
-            (q.active and '进行中' or q.done==true and '已完成任务' or q.done==false and '未完成任务' or '未知') .. ')'
+            (q.active and L['进行中'] or q.done==true and L['已完成任务'] or q.done==false and L['未完成任务'] or L['未知']) .. ')'
     end
     row.status, row.reason = C.Classify(item, states, ItemLoreDB.protected[row.id])
-    if not db then row.status='unknown'; row.reason='Questie 数据库尚未就绪或未启用' end
-    if not item.classID then row.status='unknown'; row.reason='物品分类接口未返回数据' end
+    if not db then row.status='unknown'; row.reason=L['Questie 数据库尚未就绪或未启用'] end
+    if not item.classID then row.status='unknown'; row.reason=L['物品分类接口未返回数据'] end
     if not reverseIndex then
         row.status='unknown'
-        row.reason=indexError and ('任务索引不可用：' .. indexError) or '正在建立任务关联索引，暂不允许删除'
+        row.reason=indexError and (L['任务索引不可用：'] .. indexError) or L['正在建立任务关联索引，暂不允许删除']
     end
     row.details = table.concat(details, '\n')
     local special=ItemLoreSpecialItems and ItemLoreSpecialItems.Apply(row,ItemLoreDB.protected[row.id])
@@ -86,8 +87,8 @@ local function examine(row)
             return a.id<b.id
         end)
         local first=pendingTasks[1]
-        row.reason='[' .. first.id .. '] ' .. first.name .. '（' .. (first.active and '进行中' or '未完成') .. '）'
-        if #pendingTasks>1 then row.reason=row.reason .. '；另 ' .. (#pendingTasks-1) .. ' 项' end
+        row.reason='[' .. first.id .. '] ' .. first.name .. L['（'] .. (first.active and L['进行中'] or L['未完成']) .. L['）']
+        if #pendingTasks>1 then row.reason=row.reason .. L['；另 '] .. (#pendingTasks-1) .. L[' 项'] end
         row.pendingSummary=row.reason
     end
     local databaseClass=db and call(db.QueryItemSingle,row.id,'class')
@@ -96,27 +97,27 @@ local function examine(row)
 end
 local refresh, scan, ensureIndex
 local function destroy(expected)
-    if InCombatLockdown() or GetCursorInfo() then say('战斗中或鼠标持有物品，已取消。'); return end
+    if InCombatLockdown() or GetCursorInfo() then say(L['战斗中或鼠标持有物品，已取消。']); return end
     local current = stack(expected.bag, expected.slot)
-    if not C.SameStack(expected,current) then say('背包物品发生变化，已取消，请重新扫描。'); return end
+    if not C.SameStack(expected,current) then say(L['背包物品发生变化，已取消，请重新扫描。']); return end
     examine(current)
-    if current.status~='candidate' then say('清理条件已改变，已取消。'); return end
+    if current.status~='candidate' then say(L['清理条件已改变，已取消。']); return end
     local pickup = api('PickupContainerItem')
-    if type(pickup)~='function' or type(DeleteCursorItem)~='function' then say('客户端不支持删除接口。'); return end
+    if type(pickup)~='function' or type(DeleteCursorItem)~='function' then say(L['客户端不支持删除接口。']); return end
     local ok = pcall(pickup,current.bag,current.slot)
     local kind, id, link = GetCursorInfo()
     if not ok or kind~='item' or id~=expected.id or link~=expected.link then
         if kind then ClearCursor() end
-        say('未能确认拾取的物品，已取消。'); return
+        say(L['未能确认拾取的物品，已取消。']); return
     end
     local deleted = pcall(DeleteCursorItem)
-    if not deleted or GetCursorInfo() then ClearCursor(); say('删除未完成，可能受到客户端限制。')
-    else say('已发送删除请求：' .. expected.link) end
+    if not deleted or GetCursorInfo() then ClearCursor(); say(L['删除未完成，可能受到客户端限制。'])
+    else say(L['已发送删除请求：'] .. expected.link) end
     scan()
 end
 StaticPopupDialogs.ITEMLORE_DELETE = {
-    text='删除整组 %s？\n\n仅依据 Questie 已收录的任务判断，不能排除遗漏用途。删除不能由本插件撤销。',
-    button1='确认删除',button2='取消',timeout=0,whileDead=false,hideOnEscape=true,
+    text=L['删除整组 %s？\n\n仅依据 Questie 已收录的任务判断，不能排除遗漏用途。删除不能由本插件撤销。'],
+    button1=L['确认删除'],button2=L['取消'],timeout=0,whileDead=false,hideOnEscape=true,
     OnAccept=function(self,data) if data then destroy(data) end end,
     OnHide=function(self)
         if self.itemLorePreviousStrata then
@@ -156,7 +157,7 @@ scan=function()
     ensureIndex()
     rows={}
     if not C_Container or not C_Container.GetContainerItemInfo then
-        say('当前客户端缺少结构化背包接口，已停止扫描。'); refresh(); return
+        say(L['当前客户端缺少结构化背包接口，已停止扫描。']); refresh(); return
     end
     for bag=0,4 do
         for slot=1,(call(api('GetContainerNumSlots'),bag) or 0) do
@@ -176,13 +177,13 @@ ensureIndex=function()
     if reverseIndex or indexWorker or indexError then return end
     local db=provider()
     if not db or not db.QuestPointers or not next(db.QuestPointers) then
-        indexError='Questie 尚未就绪，请稍后重新扫描'; return
+        indexError=L['Questie 尚未就绪，请稍后重新扫描']; return
     end
     indexWorker=coroutine.create(function() return C.BuildIndex(db) end)
     local function step()
         local ok,value=coroutine.resume(indexWorker)
         if not ok then
-            indexWorker=nil; indexError=tostring(value); say('任务索引失败：' .. indexError); scan(); return
+            indexWorker=nil; indexError=tostring(value); say(L['任务索引失败：'] .. indexError); scan(); return
         end
         if coroutine.status(indexWorker)=='dead' then
             reverseIndex=value; indexWorker=nil; scan()

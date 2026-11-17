@@ -1,3 +1,5 @@
+GetLocale=GetLocale or function() return 'zhCN' end
+dofile('ItemLore/Locale.lua')
 local objects={}
 local function object(name)
  local o={scripts={},shown=true,text='',height=400,width=900,scroll=0}
@@ -96,12 +98,12 @@ view:Update({b}); assert(view:VisibleCount()==0 and not objects.ItemLoreRow1.sho
 objects.ItemLoreFilter1.scripts.OnClick()
 objects.ItemLoreSearch:SetText('77'); view:Update({a,b}); assert(view:VisibleCount()==1,'search task ID')
 objects.ItemLoreSearch:SetText('')
-local unknown={bag=0,slot=3,id=3,link='Odd',count=1,status='keep',usage='未知用途',reason='unknown',details=''}
+local unknown={bag=0,slot=3,id=3,link='Odd',count=1,status='keep',usage=ItemLoreLocale['未知用途'],reason='unknown',details=''}
 view:Update({a,b,unknown}); objects.ItemLoreFilter5.scripts.OnClick(); assert(view:VisibleCount()==1)
 objects.ItemLoreRow1.scripts.OnClick(); objects.ItemLoreRowDelete1.scripts.OnClick(); assert(deleted==1,'unknown cannot delete')
 unknown.status='protected'; ItemLoreDB.protected[3]=true
 objects.ItemLoreFilter6.scripts.OnClick(); view:Update({unknown}); assert(view:VisibleCount()==1)
-objects.ItemLoreRow1.scripts.OnClick(); assert(objects.ItemLoreRowProtect1.caption.text=='取消保护')
+objects.ItemLoreRow1.scripts.OnClick(); assert(objects.ItemLoreRowProtect1.caption.text==ItemLoreLocale['取消保护'])
 objects.ItemLoreFilter1.scripts.OnClick(); a.locked=true; view:Update({a})
 objects.ItemLoreRow1.scripts.OnClick(); assert(not objects.ItemLoreRowDelete1.enabled,'locked candidate disabled')
 local task={id=4,bag=0,slot=4,link='Task item',count=1,status='keep',

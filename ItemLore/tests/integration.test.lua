@@ -1,3 +1,5 @@
+GetLocale=GetLocale or function() return 'zhCN' end
+dofile('ItemLore/Locale.lua')
 local buttons, popup, deleted, picked = {}, nil, 0, 0
 local window, renderedRows
 local bagItem={itemID=101,stackCount=2,hyperlink='item:101',isLocked=false}
@@ -122,9 +124,9 @@ print('PASS: ordinary categories filtered; tooltip and special item coverage ret
 C_Item.GetItemInfoInstant=function(id) return id,'Quest','',nil,1,12 end
 completed=false; active=true
 local pending=ItemLoreUI.Inspect(101)
-assert(pending.reason=='[77] Test quest（进行中）')
+assert(pending.reason=='[77] Test quest' .. ItemLoreLocale['（'] .. ItemLoreLocale['进行中'] .. ItemLoreLocale['）'])
 active=false
-assert(ItemLoreUI.Inspect(101).reason=='[77] Test quest（未完成）')
+assert(ItemLoreUI.Inspect(101).reason=='[77] Test quest' .. ItemLoreLocale['（'] .. ItemLoreLocale['未完成'] .. ItemLoreLocale['）'])
 completed=true
 assert(ItemLoreUI.Inspect(101).status=='candidate','display change cannot affect classification')
 print('PASS: unfinished task names and state shown; classification unchanged')

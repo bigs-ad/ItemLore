@@ -1,3 +1,5 @@
+GetLocale=GetLocale or function() return 'zhCN' end
+dofile('ItemLore/Locale.lua')
 dofile('ItemLore/Core.lua')
 local C = ItemLoreCore
 local n = 0

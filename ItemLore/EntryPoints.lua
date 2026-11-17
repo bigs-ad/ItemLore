@@ -1,8 +1,9 @@
+local L=ItemLoreLocale
 ItemLoreEntries = {}
 local E=ItemLoreEntries
 local mini, questButton
-BINDING_HEADER_ITEMLORE='物品秘笺'
-BINDING_NAME_ITEMLORE_TOGGLE='打开 / 关闭物品秘笺'
+BINDING_HEADER_ITEMLORE=L['物品秘笺']
+BINDING_NAME_ITEMLORE_TOGGLE=L['打开 / 关闭物品秘笺']
 local function tip(self,title,body)
     GameTooltip:SetOwner(self,'ANCHOR_LEFT')
     GameTooltip:SetText(title)
@@ -42,7 +43,7 @@ function E.Initialize()
             end)
         end)
         mini:SetScript('OnDragStop',function(self) self:SetScript('OnUpdate',nil) end)
-        mini:SetScript('OnEnter',function(self) tip(self,'物品秘笺','左键打开；拖动调整位置。显示开关位于主窗口右下角。') end)
+        mini:SetScript('OnEnter',function(self) tip(self,L['物品秘笺'],L['左键打开；拖动调整位置。显示开关位于主窗口右下角。']) end)
         mini:SetScript('OnLeave',function() GameTooltip:Hide() end)
     end
     if mini then position(); mini:SetShown(not ItemLoreDB.hideMinimap) end
@@ -52,9 +53,9 @@ function E.Initialize()
         questButton:SetSize(132,24)
         -- Outside the content area: do not replace abandon/share or quest tracking controls.
         questButton:SetPoint('TOPLEFT',parent,'BOTTOMLEFT',18,0)
-        questButton:SetText('物品秘笺')
+        questButton:SetText(L['物品秘笺'])
         questButton:SetScript('OnClick',function() ItemLoreUI.Open() end)
-        questButton:SetScript('OnEnter',function(self) tip(self,'物品秘笺') end)
+        questButton:SetScript('OnEnter',function(self) tip(self,L['物品秘笺']) end)
         questButton:SetScript('OnLeave',function() GameTooltip:Hide() end)
     end
 end

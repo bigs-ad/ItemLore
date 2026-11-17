@@ -1,61 +1,67 @@
-# 物品秘笺 ItemLore 0.6.13-beta
+# ItemLore / 物品秘笺 0.7.0-beta
 
-<img src="assets/logo.png" width="128" alt="物品秘笺 Logo">
+<img src="assets/logo.png" width="128" alt="ItemLore logo">
 
-查看物品关联任务和已收录用途，辅助判断保留或清理。
+[Downloads](https://github.com/bigs-ad/ItemLore/releases) · [Report an issue](https://github.com/bigs-ad/ItemLore/issues)
 
-[下载安装包](https://github.com/bigs-ad/ItemLore/releases) · [反馈问题](https://github.com/bigs-ad/ItemLore/issues)
+Use the packaged addon ZIP from Releases, not GitHub's automatically generated Source code archives.
 
-安装请选择 Releases 中的 `ItemLore-0.6.13-beta.zip`，不要使用 GitHub 自动生成的 Source code 压缩包。
+Item purposes, linked quests and manual cleanup suggestions for World of Warcraft Forever 1.60.1 (Interface 16001).
 
-适用于魔兽世界 Forever（无限服）1.60.1，Interface 16001。
-当前为测试版，建议先小范围试用。
+## Install
 
-## 安装
+Exit the game. Extract the `ItemLore` folder into `_forever_/Interface/AddOns/`.
+The final path must be `Interface/AddOns/ItemLore/ItemLore.toc`.
+Enable ItemLore and a Forever-compatible version of Questie. Questie is not included.
+Quest-based cleanup is unavailable until the database and quest index are ready.
 
-1. 完全退出游戏。
-2. 解压压缩包，将 ItemLore 文件夹放入游戏的 `_forever_/Interface/AddOns/`。
-3. 确认路径为 `Interface/AddOns/ItemLore/ItemLore.toc`，不要多套一层文件夹。
-4. 在角色选择界面的插件列表中启用“物品秘笺”。
+## Use
 
-任务关联扫描需要启用兼容当前客户端的 Questie，并等待其数据库加载完成。
-本压缩包不包含 Questie。数据库缺失或索引未就绪时，不开放任务残留物品删除。
+- Open via the minimap icon, quest-window button, `/itemlore`, or a key binding.
+- Search by item name, item ID, quest ID or purpose. Select an item for copyable details.
+- Protect items you want to keep. Eligible stacks can be deleted only after confirmation.
+- Toggle the minimap icon at the bottom right of the window; drag the icon to move it.
+- Simplified Chinese clients use Chinese. All other client languages use English interface text.
+- Item and quest names come from the game or Questie and may remain in their original language.
 
-## 使用
+## Limitations
 
-- 点击小地图上的“秘笺之眼”图标或任务界面的“物品秘笺”按钮打开。
-- 也可输入 `/itemlore`，或在游戏按键绑定中设置打开快捷键。
-- 搜索支持物品名、物品 ID、任务编号和用途文字。
-- 点击物品查看详情，可鼠标选字并使用 Ctrl+C 复制，正文不能编辑。
-- 每条物品旁可保护或取消保护；满足清理条件的物品才启用删除按钮，删除需要确认。
-- 小地图按钮可拖动；显示开关位于主窗口右下角。
+Only the current character's carried bags are scanned, not banks or other characters.
+Scanning covers quest-classified items and catalogued special items, not every item type.
+The special-use catalogue currently contains only Enchanted Sea Kelp (4639), Goaz Scrolls (209848), and Skonk's List (283389).
+Their full uses have not been verified in-game. Sources and verification scope appear in details.
+Hidden quests and custom uses may be missing. A cleanup suggestion does not prove an item has no other uses.
+There is no automatic mass deletion, and ItemLore cannot undo a deletion.
+Settings and protection are saved per character; existing saves are preserved.
 
-## 范围与限制
+## Feedback
 
-- 仅扫描当前角色随身背包，不扫描银行或其他角色。
-- 扫描任务分类物品和已收录特殊用途物品，不是所有物品的完整用途数据库。
-- 当前特殊用途资料仅收录魔力海藻、戈阿兹卷轴、斯恐克的清单。
-- 任务关联来自运行中的 Questie 数据库；用途补充资料的来源和核实范围在详情中显示。
-- 无限服的隐藏任务及自定义用途可能未被收录。“建议删除”不保证物品没有其他用途。
-- 不自动批量销毁。重要或用途不确定的物品请先保护；插件无法撤销删除。
-- 设置和保护名单按角色保存在本地。更新前可备份该角色的 SavedVariables/ItemLore.lua。
+Report the addon/client version, item and quest IDs, screenshots, reproduction steps, and full Lua errors at:
+https://github.com/bigs-ad/ItemLore/issues
 
-## 反馈
+This addon is not an official Questie project. It reads the installed Questie database at runtime; Questie data is not bundled.
 
-请提供插件版本、客户端版本、物品 ID、任务 ID、相关截图及复现步骤。
-出现 Lua 报错时请附完整错误内容。涉及用途补充时请注明信息来源及是否亲自验证。
+## 中文说明
 
-本插件并非 Questie 官方作品。详细用途资料来源见游戏内详情和 UsageData.lua。
+适用于 Forever 无限服 1.60.1。退出游戏后，将压缩包中的 `ItemLore` 文件夹放入 `_forever_/Interface/AddOns/`。
+任务关联查询和清理判断需要启用兼容版本的 Questie，本包不包含 Questie。
 
-## 开发与测试
+点击小地图图标、任务界面按钮，或输入 `/itemlore` 打开。左侧可搜索、保护物品和确认删除，右侧详情可选字复制。
+小地图图标显示开关位于窗口右下角。简体中文客户端显示中文，其他语言客户端默认英文。
+任务名由数据库提供，缺少翻译时保留原名和编号。现有保护名单和设置保持不变。
 
-游戏插件位于 `ItemLore/`，测试不需要游戏客户端：
+仅扫描当前角色随身背包中的任务分类物品和已收录特殊物品。
+用途资料尚未完整覆盖隐藏任务及自定义用途；建议删除不保证没有其他用途，重要物品请先保护。
+三条特殊用途资料均未完整实测，具体来源及核实范围见详情。删除不可由本插件撤销。
 
-```sh
-npm ci
-npm test
-```
+## 0.7.0-beta
 
-模拟测试不能替代游戏内测试，尤其是中文输入法、文字拖选和其他插件兼容性。
-任务数据在运行时读取已安装的 Questie，本仓库不分发 Questie 数据库。
-Logo 为 AI 辅助生成。当前尚未指定开源许可证。
+- Added English UI, tooltips, confirmation messages and special-use descriptions.
+- Kept Simplified Chinese UI and existing protection data.
+- Widened action buttons and adjusted text layout for English.
+- Added English fallback and bilingual regression tests; live English-client testing is still needed.
+
+## Development
+
+Run `npm ci` and `npm test` from the repository root. Tests check Lua 5.1 syntax, translation coverage, and mocked UI/safety behavior.
+They do not replace in-game testing. The logo was created with AI assistance. No open-source license has been selected yet.

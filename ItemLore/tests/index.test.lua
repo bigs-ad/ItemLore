@@ -1,3 +1,5 @@
+GetLocale=GetLocale or function() return 'zhCN' end
+dofile('ItemLore/Locale.lua')
 dofile('ItemLore/Core.lua')
 local records={
  [1]={objectives={[3]={{101,5}}},startedBy={},requiredSourceItems={102},sourceItemId=103},
