@@ -9,7 +9,9 @@ Deletion rules and plain-text copyable details are unchanged.
 悬停提示支持分段配色，任务信息与红色删除建议分行显示；多任务只显示一次建议。
 删除判断不变，右侧可复制详情仍为纯文本。
 
-<img src="assets/logo.png" width="128" alt="ItemLore logo">
+[<img src="./assets/logo-preview.png" width="128" alt="ItemLore logo">](./assets/logo.png)
+
+[View logo / 查看原图](./assets/logo.png)
 
 [Downloads](https://github.com/bigs-ad/ItemLore/releases) · [Report an issue](https://github.com/bigs-ad/ItemLore/issues)
 
