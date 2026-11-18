@@ -1,4 +1,10 @@
-# ItemLore / 物品秘笺 0.7.0-beta
+# ItemLore / 物品秘笺 0.7.2-beta
+
+Cleanup tooltips place quest information above a separate, unbroken recommendation line.
+清理提示将任务信息与红色删除建议分行显示，多任务只显示一次建议。
+
+Tooltip text now uses inline colors for branding, quest IDs, quest names and status. Deletion rules are unchanged.
+悬停提示采用分段配色；任务编号灰色、名称白色、状态单独着色，删除判断不变。
 
 Item purposes, linked quests and manual cleanup suggestions for World of Warcraft Forever 1.60.1 (Interface 16001).
 

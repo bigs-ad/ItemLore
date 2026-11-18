@@ -1,6 +1,6 @@
 local L=ItemLoreLocale
 ItemLoreView={}
-local colors={candidate={1,.34,.34},unknown={1,.78,.3},keep={.5,.83,.65},protected={.64,.7,.78}}
+local colors={candidate={1,.34,.34},unknown={1,.78,.3},keep={.5,.85,.65},protected={.62,.81,1}}
 local labels={candidate=L['建议删除'],unknown=L['未知用途'],keep=L['保留'],protected=L['已保护']}
 local function plain(s)
     return (tostring(s or ''):gsub('|c%x%x%x%x%x%x%x%x',''):gsub('|r',''):gsub('|H.-|h(.-)|h','%1'))

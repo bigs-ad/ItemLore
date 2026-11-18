@@ -1,4 +1,13 @@
-# ItemLore / 物品秘笺 0.7.0-beta
+# ItemLore / 物品秘笺 0.7.2-beta
+
+## 0.7.2-beta
+
+Tooltip text now colors the addon name, quest ID, quest name and status separately.
+Cleanup suggestions appear on a separate unbroken line; multiple quests share one recommendation.
+Deletion rules and plain-text copyable details are unchanged.
+
+悬停提示支持分段配色，任务信息与红色删除建议分行显示；多任务只显示一次建议。
+删除判断不变，右侧可复制详情仍为纯文本。
 
 <img src="assets/logo.png" width="128" alt="ItemLore logo">
 

@@ -1,4 +1,5 @@
 local english = {
+    ['任务已完成，建议删除']='Quest completed; consider deleting',
     ['已加入保护名单']='Protected from deletion',
     ['非专用任务物品，不建议清理']='Not a dedicated quest item; keep',
     ['数据库没有任务关联']='No quest links in the database',

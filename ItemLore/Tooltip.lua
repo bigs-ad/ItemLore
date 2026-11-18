@@ -1,4 +1,17 @@
 local L=ItemLoreLocale
+local palette={brand='ffffd34d',id='ffaaaaaa',name='ffffffff',keep='ff80d8a6',candidate='ffff5757',unknown='ffffc74d',protected='ff9ecfff'}
+local function color(kind,value)
+    return '|c' .. palette[kind] .. tostring(value) .. '|r'
+end
+local function task(value,state)
+    local id,body=value:match('^(%[%d+%])%s*(.*)$')
+    body=body or value
+    local at=body:find(L['（'],1,true)
+    local name=at and body:sub(1,at-1) or body
+    local suffix=at and body:sub(at) or ''
+    return (id and (color('id',id) .. ' ') or '') .. color('name',name) .. (suffix~='' and color(state,suffix) or '')
+end
+local function brand() return color('brand',L['物品秘笺：']) end
 local hooked=setmetatable({}, {__mode='k'})
 local function append(tooltip,itemID)
     if not tooltip or type(itemID)~='number' or not tooltip.AddLine then return end
@@ -14,31 +27,31 @@ local function append(tooltip,itemID)
     if not row.usage and not hasCompleted then
         if row.pendingSummary then
             tooltip.questCleanupItem=itemID
-            tooltip:AddLine(L['物品秘笺：'] .. row.pendingSummary,1,0.82,0,true)
+            tooltip:AddLine(brand() .. task(row.pendingSummary,'keep'),1,1,1,true)
         elseif row.isRelevant and row.status=='unknown' then
             tooltip.questCleanupItem=itemID
-            tooltip:AddLine(L['物品秘笺：未知用途'],1,0.82,0,true)
+            tooltip:AddLine(brand() .. color('unknown',L['未知用途']),1,1,1,true)
         end
         return
     end
     tooltip.questCleanupItem=itemID
     if row.status=='candidate' and not row.usage and hasCompleted then
-        tooltip:AddLine(L['物品秘笺：'],1,0.25,0.25,true)
-        for _,name in ipairs(row.completedQuests) do
-            tooltip:AddLine(L['任务《'] .. name .. L['》已完成，建议删除'],1,0.25,0.25,true)
+        for i,name in ipairs(row.completedQuests) do
+            tooltip:AddLine((i==1 and brand() or '') .. task(name,'candidate'),1,1,1,true)
         end
+        tooltip:AddLine(color('candidate',L['任务已完成，建议删除']),1,1,1,false)
         return
     end
     if row.usage then
-        tooltip:AddLine(L['物品秘笺：'] .. row.usage .. (row.status=='protected' and L['（已保护）'] or ''),1,0.82,0,true)
+        tooltip:AddLine(brand() .. color(row.usage==L['未知用途'] and 'unknown' or 'keep',row.usage) .. (row.status=='protected' and color('protected',L['（已保护）']) or ''),1,1,1,true)
         return
     end
     if hasCompleted then
-        tooltip:AddLine(L['物品秘笺：已完成任务'],1,0.82,0,true)
-        for _,name in ipairs(row.completedQuests) do tooltip:AddLine(name,0.5,1,0.65,true) end
+        tooltip:AddLine(brand() .. color('name',L['已完成任务']),1,1,1,true)
+        for _,name in ipairs(row.completedQuests) do tooltip:AddLine(task(name,'keep'),1,1,1,true) end
     end
     local reason=row.status=='candidate' and L['疑似残留；不能排除数据库未收录的其他用途。'] or row.reason
-    tooltip:AddLine(reason or L['其他用途尚未确认，请勿仅凭任务完成标记删除。'],1,0.82,0,true)
+    tooltip:AddLine(color(row.status=='protected' and 'protected' or row.status=='keep' and 'keep' or 'unknown',reason or L['其他用途尚未确认，请勿仅凭任务完成标记删除。']),1,1,1,true)
 end
 if TooltipDataProcessor and TooltipDataProcessor.AddTooltipPostCall and Enum and Enum.TooltipDataType then
     TooltipDataProcessor.AddTooltipPostCall(Enum.TooltipDataType.Item,function(tooltip,data)
